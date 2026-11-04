@@ -1,0 +1,35 @@
+{
+  "name": "donor-report-studio",
+  "version": "1.0.0",
+  "description": "Donor Report Studio: an AI assistant that turns a conversation into a branded 4-8 page donor impact report (PDF), for any non-profit organisation",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.js",
+    "dev": "node --env-file-if-exists=.env --watch src/server.js",
+    "samples": "node scripts/render-samples.js",
+    "assets": "node scripts/build-assets.js",
+    "demo": "DEMO_MODE=1 node --env-file-if-exists=.env src/server.js"
+  },
+  "engines": {
+    "node": ">=22.9"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.4.0",
+    "@fontsource/amiri": "^5.3.0",
+    "@fontsource/aref-ruqaa": "^5.3.0",
+    "@fontsource/barlow-semi-condensed": "^5.3.0",
+    "@fontsource/cairo": "^5.3.0",
+    "@fontsource/caveat-brush": "^5.3.0",
+    "@fontsource/lato": "^5.3.0",
+    "@fontsource/mrs-saint-delafield": "^5.3.0",
+    "@fontsource/tajawal": "^5.3.0",
+    "express": "^5.3.0",
+    "multer": "^2.5.0",
+    "playwright": "1.63.0",
+    "rtlcss": "^4.3.0",
+    "sharp": "^0.35.5"
+  }
+}

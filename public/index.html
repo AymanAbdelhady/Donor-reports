@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Donor Report Studio</title>
+  <link rel="icon" href="brand/logo-box.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="top">
+    <img src="brand/logo-box.png" alt="" class="top-logo">
+    <div class="top-title"><b>Donor Report Studio</b><span></span></div>
+    <nav class="top-nav">
+      <button type="button" class="tab-btn" data-tab="chat">Chat</button>
+      <button type="button" class="tab-btn" data-tab="card">Report <i id="tabCount"></i></button>
+    </nav>
+    <button type="button" class="ghost sm" id="btnHistory" aria-label="My reports"><span class="lbl">My reports</span><svg class="ico-hist" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></button>
+    <button type="button" class="ghost sm" id="btnNew">+ New</button>
+  </header>
+
+  <main class="studio" id="studio">
+    <!-- Chat -->
+    <section class="chat" id="chatPane">
+      <div class="thread" id="thread" aria-live="polite"></div>
+      <div class="chips" id="chips"></div>
+      <form class="composer" id="composer">
+        <label class="attach" title="Add photos" aria-label="Add photos">
+          <input type="file" id="photoInput" accept="image/*" multiple hidden>
+          <svg viewBox="0 0 24 24"><path d="M4 7h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+        </label>
+        <div class="input-wrap">
+          <textarea id="msg" dir="auto" rows="1" placeholder="Tell the assistant about the donor and project…"></textarea>
+          <div class="listening" id="listening"><span></span><span></span><span></span><span></span><span></span> Listening… tap the mic to stop</div>
+        </div>
+        <button type="button" class="mic" id="mic" title="Speak" aria-label="Speak to the assistant">
+          <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        </button>
+        <button type="submit" class="send" id="send" title="Send" aria-label="Send">
+          <svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2-7z"/></svg>
+        </button>
+      </form>
+      <p class="composer-hint">Enter to send · Shift + Enter for a new line · Drop photos anywhere in the chat</p>
+    </section>
+
+    <!-- Live report card -->
+    <aside class="card-pane" id="cardPane">
+      <div id="cardView"></div>
+    </aside>
+  </main>
+
+  <!-- Result -->
+  <section class="result" id="result" hidden></section>
+
+  <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+  <div class="toast" id="toast" hidden></div>
+  <script src="app.js" type="module"></script>
+</body>
+</html>

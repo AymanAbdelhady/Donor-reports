@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sign in · Donor Report Studio</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <main class="wrap">
+    <section class="art" aria-hidden="true">
+      <img id="artLogo" src="brand/logo-white.png" alt="">
+      <div class="art-copy">
+        <span class="hl">Thank you</span>
+        <h2>Every donor deserves a beautiful thank-you</h2>
+        <p>Talk to the assistant, add your photos and get a polished, on-brand impact report in minutes.</p>
+      </div>
+    </section>
+    <section class="panel">
+      <img id="logo" class="logo" src="brand/logo.png" alt="">
+      <h1 id="title">Donor Report Studio</h1>
+      <p class="sub" id="org">Sign in to continue</p>
+
+      <form id="loginForm" autocomplete="on">
+        <label>Username<input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required></label>
+        <label>Password<span class="pw"><input id="password" name="password" type="password" autocomplete="current-password" required><button type="button" class="eye" data-for="password" aria-label="Show password">Show</button></span></label>
+        <button class="primary" type="submit" id="loginBtn">Sign in</button>
+        <p class="hint">Forgotten your password? Ask your administrator to reset it.</p>
+        <div class="demo-box" id="demoBox" hidden><b>Demo access</b><span>Username <code id="demoUser"></code> · Password <code id="demoPass"></code></span><button type="button" id="demoFill">Fill in for me</button></div>
+      </form>
+
+      <form id="changeForm" hidden autocomplete="off">
+        <div class="notice">For your security, please choose a new password before you continue.</div>
+        <label id="curWrap">Current password<input id="cur" type="password" autocomplete="current-password"></label>
+        <label>New password<span class="pw"><input id="new1" type="password" autocomplete="new-password" required><button type="button" class="eye" data-for="new1" aria-label="Show password">Show</button></span></label>
+        <label>Repeat new password<input id="new2" type="password" autocomplete="new-password" required></label>
+        <ul class="rules" id="rules"><li data-r="len">At least 10 characters</li><li data-r="mix">Letters and at least one number</li><li data-r="same">Both entries match</li></ul>
+        <button class="primary" type="submit" id="changeBtn">Save new password</button>
+      </form>
+
+      <p class="err" id="err" role="alert"></p>
+    </section>
+  </main>
+  <script src="login.js" type="module"></script>
+</body>
+</html>

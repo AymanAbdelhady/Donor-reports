@@ -1,0 +1,110 @@
+[
+ {
+  "file": "illustration-community.jpg",
+  "tags": [
+   "general",
+   "community",
+   "children",
+   "women"
+  ],
+  "alt": "A community standing together",
+  "altAr": "مجتمع يقف معاً",
+  "width": 2400,
+  "height": 1600,
+  "illustration": true
+ },
+ {
+  "file": "illustration-water.jpg",
+  "tags": [
+   "water",
+   "health",
+   "general"
+  ],
+  "alt": "Clean water flowing through a village",
+  "altAr": "مياه نظيفة تتدفق إلى القرية",
+  "width": 2400,
+  "height": 1600,
+  "illustration": true
+ },
+ {
+  "file": "illustration-education.jpg",
+  "tags": [
+   "education",
+   "children",
+   "orphans"
+  ],
+  "alt": "Learning opens new doors",
+  "altAr": "التعلّم يفتح الأبواب",
+  "width": 2400,
+  "height": 1600,
+  "illustration": true
+ },
+ {
+  "file": "illustration-health.jpg",
+  "tags": [
+   "health",
+   "emergency",
+   "general"
+  ],
+  "alt": "Care that heals",
+  "altAr": "رعاية تشفي",
+  "width": 2400,
+  "height": 1600,
+  "illustration": true
+ },
+ {
+  "file": "illustration-home.jpg",
+  "tags": [
+   "shelter",
+   "winter",
+   "emergency",
+   "general"
+  ],
+  "alt": "Safe homes for families",
+  "altAr": "بيوت آمنة للأسر",
+  "width": 2400,
+  "height": 1600,
+  "illustration": true
+ },
+ {
+  "file": "illustration-growth.jpg",
+  "tags": [
+   "food",
+   "livelihoods",
+   "environment",
+   "general"
+  ],
+  "alt": "Growing food and livelihoods",
+  "altAr": "زراعة الغذاء وسبل العيش",
+  "width": 2400,
+  "height": 1600,
+  "illustration": true
+ },
+ {
+  "file": "illustration-together.jpg",
+  "tags": [
+   "general",
+   "food",
+   "community",
+   "ramadan"
+  ],
+  "alt": "People coming together in support",
+  "altAr": "أناس يجتمعون للدعم",
+  "width": 2400,
+  "height": 1600,
+  "illustration": true
+ },
+ {
+  "file": "illustration-city.jpg",
+  "tags": [
+   "community",
+   "general",
+   "education"
+  ],
+  "alt": "Stronger neighbourhoods",
+  "altAr": "أحياء أقوى",
+  "width": 2400,
+  "height": 1600,
+  "illustration": true
+ }
+]
