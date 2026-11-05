@@ -84,6 +84,8 @@ export const AR = {
   'Create my report': 'أنشئ تقريري',
   'Claude is connected. {name} writes the copy in {org}’s voice.': 'Claude متصل. يكتب {name} النصوص بأسلوب {org}.',
   'AI not working:': 'الذكاء الاصطناعي لا يعمل:',
+  'AI is ready to help': 'الذكاء الاصطناعي جاهز للمساعدة',
+  'AI can’t help right now. Please contact your admin.': 'الذكاء الاصطناعي غير متاح الآن. يُرجى التواصل مع المسؤول.',
   'Check again': 'تحقّق مجدداً',
   'Claude is connected ✓': 'Claude متصل ✓',
   'Who is the donor?': 'من هو المانح؟',

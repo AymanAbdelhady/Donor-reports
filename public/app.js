@@ -300,7 +300,7 @@ function renderCard() {
     <div class="box"><h3>${t('Pages')}</h3><div class="pages">${ST.report.pageOptions.map((n) => `<button type="button" data-pages="${n}" class="${n === Number(r.pages || ST.report.defaultPages) ? 'sel' : ''}">${n}</button>`).join('')}</div>
       <p class="hint">${t('Choose carefully: the style, language and number of pages can’t be changed once the report is created.')}</p></div>`}
     <div class="go">${S.report ? `<button type="button" class="primary yellow" id="btnView">${t('View my report')}</button>` : `<button type="button" class="primary yellow" id="btnCreate" ${S.ready ? '' : 'disabled'}>${t('Create my report')}</button>`}
-      ${config.aiEnabled ? `<p class="ai-ok">✓ ${t('Claude is connected. {name} writes the copy in {org}’s voice.', { name: esc(NAME), org: esc(ORG) })}</p>` : `<p class="ai-off"><b>${t('AI not working:')}</b> ${esc(config.ai?.problem || 'No API key found.')} <button type="button" id="btnRecheck">${t('Check again')}</button></p>`}</div>
+      ${config.aiEnabled ? `<p class="ai-ok"><i></i>${t('AI is ready to help')}</p>` : `<p class="ai-off"><i></i>${t('AI can’t help right now. Please contact your admin.')}</p>`}</div>
   </div>`;
   $('#editBrief').onclick = editBrief;
   $$('[data-need]').forEach((x) => (x.onclick = () => {
@@ -320,7 +320,7 @@ function renderCard() {
     config.ai = st;
     config.aiEnabled = st.enabled && st.ok;
     renderCard();
-    toast(st.ok ? t('Claude is connected ✓') : st.problem, 6000);
+    toast(st.ok ? t('AI is ready to help') : t('AI can’t help right now. Please contact your admin.'), 6000);
   };
   if ($('#btnView')) $('#btnView').onclick = showResult;
 }

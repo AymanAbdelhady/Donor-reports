@@ -371,3 +371,9 @@ dialog{border-radius:12px}
 .examples.open .ex-toggle svg{transform:rotate(180deg)}
 .ex-list{display:flex;flex-direction:column;gap:8px;animation:pop .25s ease-out}
 @media (max-width:900px){.examples{margin-left:0}}
+
+/* plain AI status for staff */
+.go .ai-ok,.go .ai-off{display:flex;align-items:center;justify-content:center;gap:8px;background:none;padding:0;font-weight:700}
+.go .ai-ok i,.go .ai-off i{width:8px;height:8px;border-radius:50%;flex:none;background:#3f9a2a;box-shadow:0 0 0 3px rgba(63,154,42,.18)}
+.go .ai-off{color:#8a2a1c}
+.go .ai-off i{background:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.18)}
