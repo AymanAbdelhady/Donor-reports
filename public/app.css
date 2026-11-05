@@ -362,3 +362,12 @@ dialog{border-radius:12px}
   .result{grid-template-columns:1fr}
   .res-side{order:0;border-left:0;border-top:4px solid var(--yellow)}
 }
+
+/* examples tucked behind one button */
+.examples{margin-left:46px;gap:8px}
+.ex-toggle{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;border:1px dashed var(--blue20);background:#fff;color:var(--blue);border-radius:8px;padding:8px 12px;font-weight:700;font-size:.9rem}
+.ex-toggle:hover{border-color:var(--blue);background:var(--blue10)}
+.ex-toggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.examples.open .ex-toggle svg{transform:rotate(180deg)}
+.ex-list{display:flex;flex-direction:column;gap:8px;animation:pop .25s ease-out}
+@media (max-width:900px){.examples{margin-left:0}}

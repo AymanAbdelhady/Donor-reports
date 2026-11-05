@@ -30,6 +30,7 @@ export const AR = {
   Create: 'أنشئ',
   'Pick a style and get a polished PDF in about a minute.': 'اختر تصميماً واحصل على ملف PDF أنيق في دقيقة تقريباً.',
   'Not sure how to start? Tap an example:': 'لا تعرف من أين تبدأ؟ اضغط على مثال:',
+  'Not sure how to start? Tap an example': 'لا تعرف من أين تبدأ؟ اضغط لرؤية أمثلة',
   Family: 'عائلة',
   Corporate: 'شركة',
   Trust: 'مؤسسة',

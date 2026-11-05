@@ -13,6 +13,7 @@ let thinking = false;
 const LAST = 'drs-last-session';
 let shownFor = null;
 let shown = 0;
+let examplesOpen = false; // "Tap an example" list open?
 // Interface language: the viewer's choice, else the organisation's default.
 const LANG_KEY = 'drs-lang';
 let LANG = (() => { try { return localStorage.getItem(LANG_KEY) || ''; } catch { return ''; } })();
@@ -143,13 +144,15 @@ function renderThread() {
   if (shownFor !== S.id) { shownFor = S.id; shown = 0; }
   const fresh = !S.transcript.some((m) => m.role === 'user');
   const N = { name: esc(NAME) };
-  const intro = `<div class="intro"><span class="hl">${t('Welcome')}</span><h1>${t('Let’s thank a donor')}</h1><p>${t('Talk or type naturally. {name} turns your words into a beautiful, on-brand impact report.', N)}</p></div>
-    ${fresh ? `<div class="how"><div><b>1</b><span><strong>${t('Talk')}</strong>${t('Tell {name} about the donor and project. Tap the mic or type.', N)}</span></div><div><b>2</b><span><strong>${t('Add photos')}</strong>${t('Drop them in. No photos? {name} uses your library images.', N)}</span></div><div><b>3</b><span><strong>${t('Create')}</strong>${t('Pick a style and get a polished PDF in about a minute.')}</span></div></div>` : ''}`;
-  const tail = fresh ? `<div class="examples"><p>${t('Not sure how to start? Tap an example:')}</p>${EXAMPLES().map(([k, x]) => `<button type="button" class="ex" dir="auto" data-ex="${esc(x)}"><em>${k}</em>${esc(x)}</button>`).join('')}</div>` : '';
+  const intro = `<div class="intro"><span class="hl">${t('Welcome')}</span><h1>${t('Let’s thank a donor')}</h1><p>${t('Talk or type naturally. {name} turns your words into a beautiful, on-brand impact report.', N)}</p></div>`;
+  // Examples stay tucked away behind one button until someone asks for them.
+  const tail = fresh ? `<div class="examples${examplesOpen ? ' open' : ''}"><button type="button" class="ex-toggle" aria-expanded="${examplesOpen}" aria-controls="exList"><span>${t('Not sure how to start? Tap an example')}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="ex-list" id="exList"${examplesOpen ? '' : ' hidden'}>${EXAMPLES().map(([k, x]) => `<button type="button" class="ex" dir="auto" data-ex="${esc(x)}"><em>${k}</em>${esc(x)}</button>`).join('')}</div></div>` : '';
   const msgs = S.transcript.map((m, i) => `<div class="msg ${m.role}${i >= shown ? ' new' : ''}">${m.role === 'agent' ? '<div class="av"></div>' : ''}<div class="bub" dir="auto">${esc(m.text)}${m.photos?.length ? `<div class="pics">${m.photos.map((f) => `<img src="reports/${S.id}/files/${f}" alt="">`).join('')}</div>` : ''}</div></div>`).join('');
   $('#thread').innerHTML = intro + msgs + tail + (thinking ? '<div class="msg agent typing new"><div class="av"></div><div class="bub"><i></i><i></i><i></i></div></div>' : '');
   shown = S.transcript.length;
-  $$('#thread [data-ex]').forEach((b) => (b.onclick = () => { $('#msg').value = b.dataset.ex; autosize(); syncSend(); $('#msg').focus(); }));
+  $$('#thread [data-ex]').forEach((b) => (b.onclick = () => { examplesOpen = false; $('#msg').value = b.dataset.ex; autosize(); syncSend(); renderThread(); $('#msg').focus(); }));
+  const tg = $('#thread .ex-toggle');
+  if (tg) tg.onclick = () => { examplesOpen = !examplesOpen; renderThread(); };
   scrollThread();
   $$('#thread img').forEach((im) => { if (!im.complete) im.addEventListener('load', scrollThread, { once: true }); });
 }
