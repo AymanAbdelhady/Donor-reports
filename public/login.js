@@ -6,7 +6,7 @@ const L_AR = {
   Username: 'اسم المستخدم', Password: 'كلمة المرور', 'Sign in': 'تسجيل الدخول', Show: 'إظهار', Hide: 'إخفاء',
   'Forgotten your password? Ask your administrator to reset it.': 'نسيت كلمة المرور؟ اطلب من المسؤول إعادة تعيينها.',
   'Every donor deserves a beautiful thank-you': 'كل مانح يستحق شكراً جميلاً',
-  'Thank you': 'شكراً لكم',
+  'Thank you': 'شكراً لكم', Talk: 'تحدّث', 'Add photos': 'أضف الصور', Download: 'نزّل التقرير',
   'Demo access': 'دخول تجريبي', 'Fill in for me': 'املأ البيانات عني',
 };
 const lt = (s) => (LANG === 'ar' && L_AR[s]) || s;
@@ -18,7 +18,7 @@ function applyLang(offered) {
     const css = document.querySelector('link[href="login.css"]');
     if (css) css.href = 'login.rtl.css';
     document.querySelectorAll('label').forEach((l) => { const n = l.childNodes[0]; if (n && n.nodeType === 3 && L_AR[n.textContent.trim()]) n.textContent = L_AR[n.textContent.trim()]; });
-    document.querySelectorAll('button, .hint, .art h2, .art .hl, .demo-box b').forEach((el) => { if (el.children.length === 0 && L_AR[el.textContent.trim()]) el.textContent = L_AR[el.textContent.trim()]; });
+    document.querySelectorAll('button, .hint, .story h2, .kicker, .demo-box b, .steps li').forEach((el) => { if (el.children.length === 0 && L_AR[el.textContent.trim()]) el.textContent = L_AR[el.textContent.trim()]; });
   }
   if (offered.length > 1) {
     const b = document.createElement('button');
@@ -26,7 +26,7 @@ function applyLang(offered) {
     b.className = 'lang-switch';
     b.textContent = LANG === 'ar' ? 'English' : 'عربي';
     b.onclick = () => { try { localStorage.setItem('drs-lang', LANG === 'ar' ? 'en' : 'ar'); } catch {} location.reload(); };
-    document.querySelector('.panel').prepend(b);
+    document.querySelector('.panel-top').append(b);
   }
 }
 const params = new URLSearchParams(location.search);
@@ -41,11 +41,46 @@ async function api(url, body) {
 }
 const showError = (m) => ($('#err').textContent = m || '');
 
+// Background slideshow: the online photos set in the dashboard. Each one is
+// checked before it is shown; if none load (offline, blocked or a broken
+// link) the organisation's own library photos or illustrations are used.
+const preload = (src) => new Promise((ok) => { const i = new Image(); i.onload = () => ok(i.naturalWidth > 1 ? src : null); i.onerror = () => ok(null); i.src = src; setTimeout(() => ok(null), 8000); });
+async function slideshow(online, local) {
+  const slides = document.querySelectorAll('.slide');
+  const dots = $('#dots');
+  const list = [];
+  let shown = -1;
+  let cur = 0;
+  let timer;
+  const show = (n) => {
+    if (n === shown || !list[n]) return;
+    shown = n;
+    cur = 1 - cur;
+    slides[cur].style.backgroundImage = `url("${list[n].replace(/"/g, '%22')}")`;
+    slides[cur].classList.add('on');
+    slides[1 - cur].classList.remove('on');
+    dots.querySelectorAll('button').forEach((d, i) => d.classList.toggle('on', i === n));
+  };
+  const tick = () => { clearInterval(timer); if (list.length > 1) timer = setInterval(() => show((shown + 1) % list.length), 6500); };
+  const add = (src) => {
+    list.push(src);
+    dots.innerHTML = list.length > 1 ? list.map((_, i) => `<button type="button" aria-label="Photo ${i + 1}" class="${i === shown ? 'on' : ''}"></button>`).join('') : '';
+    dots.querySelectorAll('button').forEach((d, i) => (d.onclick = () => { show(i); tick(); }));
+    if (list.length === 1) show(0);
+    tick();
+  };
+  // Show the first photo that loads straight away, then add the rest as they arrive.
+  await Promise.all(online.map((u) => preload(u).then((src) => src && add(src))));
+  if (!list.length) await Promise.all(local.map((u) => preload(u).then((src) => src && add(src))));
+}
+
 // Organisation branding (colours, logo, names) from the admin settings.
 fetch('api/public-config')
   .then((r) => r.json())
   .then((c) => {
     applyLang(c.languages?.offered || ['en']);
+    slideshow(c.signin?.images || [], c.signin?.local || []);
+    if (c.signin?.headline && LANG !== 'ar') $('#headline').textContent = c.signin.headline;
     if (c.demo) {
       $('#demoBox').hidden = false;
       $('#demoUser').textContent = c.demo.username;
@@ -55,11 +90,12 @@ fetch('api/public-config')
     const root = document.documentElement.style;
     if (c.colors?.blue) root.setProperty('--blue', c.colors.blue);
     if (c.colors?.yellow) root.setProperty('--yellow', c.colors.yellow);
+    if (c.colors?.purple) root.setProperty('--purple', c.colors.purple);
     if (c.logos?.colour) $('#logo').src = `brand/${c.logos.colour}?v=${c.version}`;
     if (c.logos?.white) $('#artLogo').src = `brand/${c.logos.white}?v=${c.version}`;
     if (c.studio?.title) { $('#title').textContent = c.studio.title; document.title = `Sign in · ${c.studio.title}`; }
     if (c.org?.orgName) $('#org').textContent = `${c.org.orgName}: sign in to continue`;
-    if (c.studio?.assistantName) $('.art p').textContent = LANG === 'ar' ? `تحدّث إلى ${c.studio.assistantNameAr || c.studio.assistantName}، وأضف صورك، واحصل على تقرير أثر أنيق بهوية مؤسستك خلال دقائق.` : `Talk to ${c.studio.assistantName}, add your photos and get a polished, on-brand impact report in minutes.`;
+    if (c.studio?.assistantName) $('#pitch').textContent = LANG === 'ar' ? `تحدّث إلى ${c.studio.assistantNameAr || c.studio.assistantName}، وأضف صورك، واحصل على تقرير أثر أنيق بهوية مؤسستك خلال دقائق.` : `Talk to ${c.studio.assistantName}, add your photos and get a polished, on-brand impact report in minutes.`;
     if (LANG === 'ar' && c.ar?.orgName) $('#org').textContent = `${c.ar.orgName}: سجّل الدخول للمتابعة`;
   })
   .catch(() => {});

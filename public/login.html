@@ -7,17 +7,21 @@
   <link rel="stylesheet" href="login.css">
 </head>
 <body>
+  <div class="bg" id="bg" aria-hidden="true"><div class="slide on"></div><div class="slide"></div></div>
+  <div class="shade" aria-hidden="true"></div>
   <main class="wrap">
-    <section class="art" aria-hidden="true">
+    <section class="story" aria-hidden="true">
       <img id="artLogo" src="brand/logo-white.png" alt="">
-      <div class="art-copy">
-        <span class="hl">Thank you</span>
-        <h2>Every donor deserves a beautiful thank-you</h2>
-        <p>Talk to the assistant, add your photos and get a polished, on-brand impact report in minutes.</p>
+      <div class="story-copy">
+        <span class="kicker">Thank you</span>
+        <h2 id="headline">Every donor deserves a beautiful thank-you</h2>
+        <p id="pitch">Talk to the assistant, add your photos and get a polished, on-brand impact report in minutes.</p>
+        <ul class="steps"><li><b>1</b>Talk</li><li><b>2</b>Add photos</li><li><b>3</b>Download</li></ul>
       </div>
+      <div class="dots" id="dots"></div>
     </section>
     <section class="panel">
-      <img id="logo" class="logo" src="brand/logo.png" alt="">
+      <div class="panel-top"><img id="logo" class="logo" src="brand/logo.png" alt=""></div>
       <h1 id="title">Donor Report Studio</h1>
       <p class="sub" id="org">Sign in to continue</p>
 

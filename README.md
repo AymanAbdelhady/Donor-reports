@@ -14,6 +14,7 @@ This is the **generic edition**: it contains no third-party branding, photos or 
 
 **For administrators (the dashboard):**
 - **Branding:** name, tagline, contact details, currency, "about us", colours (or one of six **quick looks**), logos and a **photo library**.
+- **Sign-in page:** a headline and up to 8 online photo links that fade behind the sign-in box (Branding page). If a link can’t load, the photo library or illustrations are shown instead.
 - **CEO & letter:** who signs, their photo and signature, and points to include in every letter.
 - **Assistant & questions:** the assistant's name and greeting, the questions it asks and their order, **giving types**, extra rules and tone of voice.
 - **Report styles:** which of the nine designs staff can use, page counts, an optional **blessing line** (any language), **closing quotes** and the AI rewrite limit.

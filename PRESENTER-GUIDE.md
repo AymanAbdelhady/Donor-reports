@@ -19,6 +19,7 @@ Thanking donors well takes hours: gathering facts, writing, designing, checking.
 - Click a **Quick look** close to their colours, or type their hex colours.
 - **Upload their logo** and drop **their photos** into the **Photo library**.
 - Under **CEO & letter**, type their CEO's name.
+- At the bottom of **Branding**, paste links to 2–4 of their own online photos under **Sign-in page**. Their sign-in screen now shows their work.
 
 > Everything you just changed (the Studio, the illustrations, every report) now carries their brand.
 

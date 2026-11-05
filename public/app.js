@@ -92,7 +92,7 @@ const LOGO = (k) => `brand/${ST.logos[k]}?v=${ST.version}`;
   ['purple', 'teal', 'green', 'yellow'].forEach((k) => r.setProperty(`--${k}`, c[k]));
   r.setProperty('--warm', c.warmGrey);
   r.setProperty('--logo-white', `url('${LOGO('white')}')`);
-  $('.top-logo').src = LOGO('box');
+  $('.top-logo').src = LOGO('colour');
   $('.top-logo').alt = ST.org.orgName;
   $('.top-title b').textContent = ST.studio.title;
   $('.top-title span').textContent = ORGNAME;

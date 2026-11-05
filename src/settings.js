@@ -43,6 +43,16 @@ export function defaults() {
       assistantName: 'Ava',
       greeting: 'Hello! I’m {name}, your donor-report assistant. Tell me about the donor and the project they supported. Just talk to me (tap the mic) or type. You can also paste notes, an email or a field report and I’ll pick out what I need.',
     },
+    // Sign-in page: background photos (online links) and the words over them.
+    signin: {
+      images: [
+        'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1800&q=80',
+        'https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1800&q=80',
+        'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1800&q=80',
+        'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1800&q=80',
+      ],
+      headline: 'Every donor deserves a beautiful thank-you',
+    },
     agent: { topics: structuredClone(DEFAULT_TOPICS), extraRules: '', givingTypes: [...GIVING_TYPES] },
     voice: [...b.voice],
     // Languages: which report and interface languages are offered, and the Arabic copy.
@@ -155,6 +165,10 @@ export function updateSettings(patch) {
     next.languages.offered = (next.languages.offered || []).filter((x) => ['en', 'ar'].includes(x));
     if (!next.languages.offered.length) throw Object.assign(new Error('Offer at least one language'), { status: 400 });
   }
+  if (next.signin) {
+    next.signin.images = (Array.isArray(next.signin.images) ? next.signin.images : []).map((u) => String(u).trim()).filter((u) => /^https:\/\/\S+$/i.test(u)).slice(0, 8);
+    next.signin.headline = String(next.signin.headline || '').trim().slice(0, 120);
+  }
   next.agent.givingTypes = [...new Set((next.agent.givingTypes || []).map((g) => String(g).trim()).filter(Boolean))].slice(0, 30);
   if (!next.agent.givingTypes.length) next.agent.givingTypes = [...GIVING_TYPES];
   if (Array.isArray(next.report.quotes)) next.report.quotes = next.report.quotes.filter((q) => q && String(q.text || '').trim()).map((q) => ({ text: String(q.text).trim().slice(0, 240), by: String(q.by || '').trim().slice(0, 80) })).slice(0, 12);
@@ -190,6 +204,7 @@ export function publicSettings() {
     colors: { ...brand.colors },
     logos: s.logos,
     ceo: { name: s.ceo.name, title: s.ceo.title, photo: s.ceo.photo },
+    signin: s.signin,
     studio: { ...s.studio, greeting: greetingText(), greetingAr: greetingText('ar'), assistantNameAr: assistantName('ar') },
     languages: languages(),
     ar: { orgName: s.ar?.orgName, shortName: s.ar?.shortName, ceoName: s.ar?.ceoName, ceoTitle: s.ar?.ceoTitle, givingTypes: s.ar?.givingTypes || [] },

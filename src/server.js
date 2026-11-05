@@ -17,7 +17,7 @@ import { BRIEF_FIELDS, CHECKLIST, emptyBrief } from './schema.js';
 import { buildHtml, styleList, getStyle } from './render/index.js';
 import { htmlToPdf } from './pdf.js';
 import { chatTurn, writeReport, aiEnabled, aiStatus } from './ai.js';
-import { pickLibrary } from './library.js';
+import { pickLibrary, loadLibrary } from './library.js';
 import { ROOT, BRAND_DIR, FONT_DIR, ASSETS_DIR, fileResolvers, httpResolvers, brandAssetPath, BASE, P } from './paths.js';
 import { THUMBS_DIR, persistentStorage } from './store.js';
 import { getSettings, publicSettings, settingsVersion, greetingText, languages, assistantName } from './settings.js';
@@ -140,7 +140,7 @@ app.post('/api/me/password', route(async (req, res) => {
 app.get('/api/public-config', (_req, res) => {
   const s = publicSettings();
   // In demo mode the sign-in page shows the demo details so presenters can get straight in.
-  res.json({ org: { orgName: s.org.orgName }, languages: s.languages, ar: { orgName: s.ar?.orgName }, studio: { title: s.studio.title, assistantName: s.studio.assistantName, assistantNameAr: s.studio.assistantNameAr }, colors: s.colors, logos: s.logos, version: s.version, demo: DEMO ? { username: BOOTSTRAP_ADMIN.username, password: BOOTSTRAP_ADMIN.password } : null });
+  res.json({ org: { orgName: s.org.orgName }, signin: { images: s.signin?.images || [], headline: s.signin?.headline || '', local: loadLibrary().slice(0, 6).map((im) => P(`/brand/library/${im.file}`)) }, languages: s.languages, ar: { orgName: s.ar?.orgName }, studio: { title: s.studio.title, assistantName: s.studio.assistantName, assistantNameAr: s.studio.assistantNameAr }, colors: s.colors, logos: s.logos, version: s.version, demo: DEMO ? { username: BOOTSTRAP_ADMIN.username, password: BOOTSTRAP_ADMIN.password } : null });
 });
 
 app.use('/api/admin', admin);

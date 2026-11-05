@@ -396,7 +396,7 @@ function wireAssets(el, after) {
 
 async function branding(el) {
   const s = SV.settings;
-  const draft = { org: { ...s.org }, colors: { ...s.colors }, studio: { ...s.studio } };
+  const draft = { org: { ...s.org }, colors: { ...s.colors }, studio: { ...s.studio }, signin: { images: [...(s.signin?.images || [])], headline: s.signin?.headline || '' } };
   const f = (sec, k, label, ph = '') => `<label class="f">${label}<input data-sec="${sec}" data-k="${k}" value="${esc(draft[sec][k])}" placeholder="${esc(ph)}"></label>`;
   el.innerHTML = `${head('Branding', 'Organisation details, colours, logos and photos. These apply to the Studio and to every new report.')}
     <div class="card"><h2>Quick looks <small>one click restyles the Studio, every report and the illustrations</small></h2>
@@ -426,7 +426,13 @@ async function branding(el) {
       <p class="small muted">Add a few of your best photos of your work. They’re used (marked as illustrative) when a report needs more images. Until then, illustrations in your colours are used.</p>
       <div class="lib">${(SV.library || []).map((im) => `<figure><img src="${im.url}" alt=""><input data-lcap="${esc(im.file)}" value="${esc(im.alt)}" maxlength="120" title="Caption"><button class="btn sm danger" data-ldel="${esc(im.file)}">Remove</button></figure>`).join('') || '<p class="muted small">No photos yet.</p>'}</div>
       <div class="actions" style="justify-content:flex-start"><label class="btn primary">Add photos<input type="file" accept="image/*" multiple hidden id="libUp"></label></div></div>
+    <div class="card"><h2>Sign-in page <small>photos that fade behind the sign-in box</small></h2>
+      <label class="f full">Headline<input id="siHead" value="${esc(draft.signin.headline)}" maxlength="120" placeholder="Every donor deserves a beautiful thank-you"></label>
+      <label class="f full" style="margin-top:12px">Photo links <small>one https link per line (up to 8). If none can load, your photo library or illustrations are shown instead.</small><textarea id="siImgs" rows="5" spellcheck="false">${esc(draft.signin.images.join('\n'))}</textarea></label>
+      <div class="si-thumbs">${draft.signin.images.map((u) => `<img src="${esc(u)}" alt="" loading="lazy" onerror="this.classList.add('bad');this.title='This link could not be loaded'">`).join('')}</div></div>
     <div class="savebar"><button class="btn primary" id="saveB">Save branding</button></div>`;
+  $('#siHead').oninput = (e) => (draft.signin.headline = e.target.value);
+  $('#siImgs').oninput = (e) => (draft.signin.images = e.target.value.split('\n').map((l) => l.trim()).filter(Boolean));
   const preview = () => { const p = $('#pv'); p.style.background = draft.colors.blue; p.querySelector('.hl').style.background = draft.colors.yellow; p.querySelector('.hl').style.color = draft.colors.blue; p.querySelector('.k').style.color = draft.colors.yellow; };
   preview();
   $$('[data-sec]').forEach((i) => (i.oninput = () => (draft[i.dataset.sec][i.dataset.k] = i.value)));

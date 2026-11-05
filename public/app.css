@@ -276,3 +276,89 @@ dialog::backdrop{background:rgba(7,40,80,.55)}
 
 .lang-btn{font-weight:800}
 .pages.langs button{font-size:1rem}
+
+/* =====================================================================
+   Generic edition layout: report card on the left, conversation on the
+   right, a light header with a colour stripe, squarer components and the
+   review tools on the right of the preview.
+   ===================================================================== */
+:root{--r:12px;--topH:68px}
+.top{background:#fff;color:var(--ink);border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(30,35,40,.05)}
+.top::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:4px;background:linear-gradient(90deg,var(--blue) 0 40%,var(--teal) 40% 65%,var(--green) 65% 82%,var(--yellow) 82%)}
+.top-logo{height:44px;padding-right:14px;border-right:1px solid var(--line)}
+.top-title b{text-transform:none;color:var(--ink);font-size:1.3rem;letter-spacing:0}
+.top-title span{color:var(--grey);opacity:1}
+.top .ghost{color:var(--blue);border:1.5px solid var(--blue20);background:#fff;border-radius:8px;text-transform:none;letter-spacing:0}
+.top .ghost:hover{background:var(--blue10);border-color:var(--blue)}
+.me-btn{border-radius:10px;border:0;background:var(--blue);color:#fff}
+.primary{border-radius:10px;text-transform:none;letter-spacing:.01em;box-shadow:0 4px 12px rgba(30,35,40,.18)}
+.primary:hover{box-shadow:0 8px 18px rgba(30,35,40,.22)}
+
+/* panes: report card first */
+.studio{grid-template-columns:420px minmax(0,1fr);padding-top:4px}
+.card-pane{order:-1;border-left:0;border-right:1px solid var(--line);background:#fff}
+.chat{background:var(--warm2);background-image:radial-gradient(rgba(30,35,40,.07) 1px,transparent 1px);background-size:18px 18px}
+.chat::before{background:linear-gradient(180deg,var(--warm2),transparent 120px)}
+
+/* conversation */
+.intro{align-self:flex-start;text-align:left;max-width:760px;margin:4px 0 2px;border-left:5px solid var(--yellow);padding:2px 0 2px 16px}
+.intro .hl{background:none;transform:none;padding:0;color:var(--teal);font-size:1.5rem;margin-bottom:0}
+.intro h1{text-transform:none;color:var(--ink);font-size:2.4rem}
+.how{position:relative;align-self:flex-start;gap:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.how div{border:0;border-radius:0;background:none;padding:14px 16px;flex-direction:column;gap:8px}
+.how div + div{border-left:1px solid var(--line)}
+.how b{border-radius:8px}
+.msg .av{border-radius:10px;box-shadow:none}
+.msg .bub{border-radius:12px}
+.msg.agent .bub{background:#fff;border:1px solid var(--line);border-left:4px solid var(--blue);border-top-left-radius:12px;box-shadow:0 2px 6px rgba(30,35,40,.04)}
+.msg.user .bub{border-top-right-radius:12px;border-bottom-right-radius:4px}
+.examples{margin-left:0}
+.ex,.chips button,.checks span,.checks button{border-radius:8px}
+.chips button{background:#fff;border:1px solid var(--blue20)}
+.composer{border-radius:14px;border:1.5px solid var(--line)}
+.attach,.mic,.send{border-radius:10px}
+
+/* report card: a "report in progress" sheet */
+.rc{padding:18px 18px 26px;gap:14px}
+.rc-cover{border-radius:var(--r);min-height:200px;box-shadow:none}
+.rc-cover::after{background:linear-gradient(0deg,var(--blue) 8%,color-mix(in srgb,var(--blue) 20%,transparent) 100%)}
+.meter,.box{border:1px solid var(--line);border-radius:var(--r)}
+.meter{background:var(--blue10)}
+.box h3{color:var(--ink);font-size:.9rem;padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.box h3::before{content:"";width:4px;height:14px;border-radius:2px;background:var(--yellow);margin-right:8px;flex:none}
+.box h3{justify-content:flex-start}
+.box h3 button{margin-left:auto}
+.sty{border-radius:8px;border-width:2px}
+.pages button{border-radius:8px}
+.go{background:#fff;box-shadow:0 -14px 14px -6px #fff}
+.ring{border-radius:12px}
+.ring b{border-radius:8px}
+
+/* result: preview first, review tools on the right */
+.result{grid-template-columns:minmax(0,1fr) 360px;background:#20252b}
+.res-side{order:2;border-left:4px solid var(--yellow)}
+.res-side h1{text-transform:none;color:var(--ink)}
+.res-side textarea{border-radius:8px}
+.building{background:color-mix(in srgb,var(--blue) 94%,#000)}
+dialog{border-radius:12px}
+
+@media (max-width:900px){
+  :root{--topH:60px}
+  .top-logo{height:38px;padding-right:0;border-right:0}
+  .top{gap:6px;padding:0 8px}
+  .top .ghost{white-space:nowrap;padding:6px 8px;font-size:.8rem}
+  .top-logo{height:32px}
+  .tab-btn{padding:6px 9px}
+  .me-btn{width:34px;height:34px}
+  .top-title{flex:1 1 0;width:0}
+  .top-nav{background:var(--blue10);border-radius:10px}
+  .tab-btn{color:var(--blue);border-radius:8px;text-transform:none}
+  .tab-btn.on{background:var(--blue);color:#fff}
+  .studio{grid-template-columns:1fr}
+  .card-pane{border-right:0}
+  .intro h1{font-size:1.8rem}
+  .how div + div{border-left:0;border-top:1px solid var(--line)}
+  .how div{flex-direction:row}
+  .result{grid-template-columns:1fr}
+  .res-side{order:0;border-left:0;border-top:4px solid var(--yellow)}
+}

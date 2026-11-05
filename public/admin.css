@@ -184,3 +184,19 @@ dialog::backdrop{background:rgba(7,40,80,.5)}
 .ar-row input{margin-bottom:6px}
 [dir=rtl]{font-family:'Tajawal','Lato',system-ui,sans-serif}
 @media (max-width:900px){.ar-row,.gt-pair{grid-template-columns:1fr}}
+
+.si-thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.si-thumbs img{width:120px;height:72px;object-fit:cover;border-radius:4px;background:var(--warm2);border:1px solid var(--line)}
+.si-thumbs img.bad{opacity:.35;outline:2px dashed var(--red)}
+
+/* Generic edition: dark navigation rail in the brand colour */
+.top{box-shadow:inset 0 -4px 0 var(--yellow)}
+.side{background:color-mix(in srgb,var(--blue) 28%,#121821);border-right:0;padding:18px 12px}
+.side a{color:rgba(255,255,255,.82);border-radius:8px;border-left:0;padding:10px 12px}
+.side a .nav-ico{color:rgba(255,255,255,.55)}
+.side a:hover{background:rgba(255,255,255,.08);color:#fff}
+.side a.on{background:#fff;color:var(--blue);box-shadow:inset 4px 0 0 var(--yellow)}
+.side a.on .nav-ico{color:var(--blue)}
+.side .grp{color:rgba(255,255,255,.45)}
+.kpi{border-top:0;border-left:4px solid var(--blue);border-radius:8px}
+.card{border-radius:10px}
