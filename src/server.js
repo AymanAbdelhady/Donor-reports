@@ -137,10 +137,16 @@ app.post('/api/me/password', route(async (req, res) => {
 }));
 
 // Branding for the sign-in page (no secrets).
+// Sign-in fallback photos: real photography first, illustrations only if there is none.
+const signinFallback = () => {
+  const lib = loadLibrary();
+  const photos = lib.filter((im) => !im.illustration);
+  return (photos.length ? photos : lib).slice(0, 6).map((im) => P(`/brand/library/${im.file}`));
+};
 app.get('/api/public-config', (_req, res) => {
   const s = publicSettings();
   // In demo mode the sign-in page shows the demo details so presenters can get straight in.
-  res.json({ org: { orgName: s.org.orgName }, signin: { images: s.signin?.images || [], headline: s.signin?.headline || '', local: loadLibrary().slice(0, 6).map((im) => P(`/brand/library/${im.file}`)) }, languages: s.languages, ar: { orgName: s.ar?.orgName }, studio: { title: s.studio.title, assistantName: s.studio.assistantName, assistantNameAr: s.studio.assistantNameAr }, colors: s.colors, logos: s.logos, version: s.version, demo: DEMO ? { username: BOOTSTRAP_ADMIN.username, password: BOOTSTRAP_ADMIN.password } : null });
+  res.json({ org: { orgName: s.org.orgName }, signin: { images: s.signin?.images || [], headline: s.signin?.headline || '', local: signinFallback() }, languages: s.languages, ar: { orgName: s.ar?.orgName }, studio: { title: s.studio.title, assistantName: s.studio.assistantName, assistantNameAr: s.studio.assistantNameAr }, colors: s.colors, logos: s.logos, version: s.version, demo: DEMO ? { username: BOOTSTRAP_ADMIN.username, password: BOOTSTRAP_ADMIN.password } : null });
 });
 
 app.use('/api/admin', admin);

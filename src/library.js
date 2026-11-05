@@ -31,7 +31,8 @@ export function saveCustomLibrary(list) {
 /** Uploaded library photos (real photography) first, then the brand-coloured illustrations. */
 export function loadLibrary() {
   const custom = customLibrary().map((im) => ({ ...im, file: `custom/${im.file}`, custom: true }));
-  return [...custom, ...readList(path.join(BRAND_DIR, 'library', 'library.json'))];
+  // Bundled sample photography (brand/library/photos), then the illustrations.
+  return [...custom, ...readList(path.join(BRAND_DIR, 'library', 'photos.json')), ...readList(path.join(BRAND_DIR, 'library', 'library.json'))];
 }
 
 /** Library photos to top a report up to `target` images, best sector match first. */
@@ -40,7 +41,9 @@ export function pickLibrary(brief, have, target = 7) {
   if (!need) return [];
   const lib = loadLibrary();
   const tags = SECTOR_TAGS[sectorCopy(brief).key] || SECTOR_TAGS.general;
-  const score = (im) => (im.custom ? 50 : 0) + tags.reduce((s, t, i) => s + ((im.tags || []).includes(t) ? 10 - i * 3 : 0), 0) + ((im.tags || []).includes('general') ? 2 : 0) + (im.width >= 1200 ? 3 : 0);
+  const tagScore = (im) => tags.reduce((s, t, i) => s + ((im.tags || []).includes(t) ? 10 - i * 3 : 0), 0);
+  // Bundled sample photos only beat the illustrations when they match the project.
+  const score = (im) => (im.custom ? 50 : 0) + (im.photo ? (tagScore(im) > 0 ? 8 : -40) : 0) + tagScore(im) + ((im.tags || []).includes('general') ? 2 : 0) + (im.width >= 1200 ? 3 : 0);
   // Stable order per donor so re-renders don't reshuffle.
   const seed = [...String(brief.donor?.name || '')].reduce((a, ch) => a + ch.charCodeAt(0), 0);
   return lib

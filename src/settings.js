@@ -45,11 +45,13 @@ export function defaults() {
     },
     // Sign-in page: background photos (online links) and the words over them.
     signin: {
+      // Bundled sample photos (brand/library/photos). Replace with links to your own.
       images: [
-        'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1800&q=80',
-        'https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=1800&q=80',
-        'https://images.unsplash.com/photo-1509099836639-18ba1795216d?auto=format&fit=crop&w=1800&q=80',
-        'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=1800&q=80',
+        'brand/library/photos/photo-serving-meals.jpg',
+        'brand/library/photos/photo-volunteer-boxes.jpg',
+        'brand/library/photos/photo-delivery-door.jpg',
+        'brand/library/photos/photo-meal-handover.jpg',
+        'brand/library/photos/photo-delivery-care.jpg',
       ],
       headline: 'Every donor deserves a beautiful thank-you',
     },
@@ -166,7 +168,7 @@ export function updateSettings(patch) {
     if (!next.languages.offered.length) throw Object.assign(new Error('Offer at least one language'), { status: 400 });
   }
   if (next.signin) {
-    next.signin.images = (Array.isArray(next.signin.images) ? next.signin.images : []).map((u) => String(u).trim()).filter((u) => /^https:\/\/\S+$/i.test(u)).slice(0, 8);
+    next.signin.images = (Array.isArray(next.signin.images) ? next.signin.images : []).map((u) => String(u).trim()).filter((u) => /^https:\/\/\S+$/i.test(u) || /^brand\/[\w./-]+\.(jpe?g|png|webp)$/i.test(u)).slice(0, 8);
     next.signin.headline = String(next.signin.headline || '').trim().slice(0, 120);
   }
   next.agent.givingTypes = [...new Set((next.agent.givingTypes || []).map((g) => String(g).trim()).filter(Boolean))].slice(0, 30);

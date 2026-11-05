@@ -10,6 +10,7 @@ import { ROOT, BRAND_DIR, fileResolvers } from '../src/paths.js';
 import { pickLibrary } from '../src/library.js';
 import { fallbackCopy } from '../src/fallbackCopy.js';
 import { sampleBrief, sampleCopy, sampleCopyAr } from './sample-data.js';
+import { showcaseBrief, showcaseCopy, showcaseCopyAr, showcaseImages } from './showcase-data.js';
 
 const outDir = path.join(ROOT, 'samples');
 const thumbDir = path.join(ROOT, 'public', 'styles');
@@ -27,7 +28,6 @@ for (const S of STYLES) {
     const html = buildHtml(report, fileResolvers(BRAND_DIR));
     const pdf = path.join(outDir, `${S.id}-${pages}p.pdf`);
     await htmlToPdf(html, BRAND_DIR, pdf);
-    if (pages === 8) await htmlToPng(html, BRAND_DIR, path.join(thumbDir, `${S.id}.png`), 0);
     console.log('rendered', path.relative(ROOT, pdf));
   }
   // Arabic (right-to-left) version
@@ -35,6 +35,17 @@ for (const S of STYLES) {
     const report = { brief: sampleBrief, copy: sampleCopyAr, images, styleId: S.id, pages, language: 'ar' };
     const pdf = path.join(outDir, `${S.id}-${pages}p-ar.pdf`);
     await htmlToPdf(buildHtml(report, fileResolvers(BRAND_DIR)), BRAND_DIR, pdf);
+    console.log('rendered', path.relative(ROOT, pdf));
+  }
+  // Showcase: the food-relief report with real photography (English + Arabic).
+  // Its cover is also the style thumbnail in the Studio's style picker.
+  for (const language of ['en', 'ar']) {
+    const report = { brief: showcaseBrief, copy: language === 'ar' ? showcaseCopyAr : showcaseCopy, images: showcaseImages, styleId: S.id, pages: 8, language };
+    const html = buildHtml(report, fileResolvers(BRAND_DIR));
+    const pdf = path.join(outDir, 'showcase', `${S.id}${language === 'ar' ? '-ar' : ''}.pdf`);
+    await fs.mkdir(path.dirname(pdf), { recursive: true });
+    await htmlToPdf(html, BRAND_DIR, pdf);
+    if (language === 'en') await htmlToPng(html, BRAND_DIR, path.join(thumbDir, `${S.id}.png`), 0);
     console.log('rendered', path.relative(ROOT, pdf));
   }
 }

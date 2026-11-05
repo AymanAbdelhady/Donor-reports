@@ -8,6 +8,7 @@ const L_AR = {
   'Every donor deserves a beautiful thank-you': 'كل مانح يستحق شكراً جميلاً',
   'Thank you': 'شكراً لكم', Talk: 'تحدّث', 'Add photos': 'أضف الصور', Download: 'نزّل التقرير',
   'Demo access': 'دخول تجريبي', 'Fill in for me': 'املأ البيانات عني',
+  'Every gift': 'كل عطاء', 'reaches a family': 'يصل إلى أسرة', 'and a thank-you': 'ويعود بالشكر', 'Thank you!': 'شكراً لكم!',
 };
 const lt = (s) => (LANG === 'ar' && L_AR[s]) || s;
 function applyLang(offered) {
@@ -18,7 +19,8 @@ function applyLang(offered) {
     const css = document.querySelector('link[href="login.css"]');
     if (css) css.href = 'login.rtl.css';
     document.querySelectorAll('label').forEach((l) => { const n = l.childNodes[0]; if (n && n.nodeType === 3 && L_AR[n.textContent.trim()]) n.textContent = L_AR[n.textContent.trim()]; });
-    document.querySelectorAll('button, .hint, .story h2, .kicker, .demo-box b, .steps li').forEach((el) => { if (el.children.length === 0 && L_AR[el.textContent.trim()]) el.textContent = L_AR[el.textContent.trim()]; });
+    document.querySelectorAll('.steps li').forEach((li) => { const n = li.lastChild; if (n && n.nodeType === 3 && L_AR[n.textContent.trim()]) n.textContent = L_AR[n.textContent.trim()]; });
+    document.querySelectorAll('button, .hint, .story h2, .kicker, .demo-box b, .pc figcaption, .sticker').forEach((el) => { if (el.children.length === 0 && L_AR[el.textContent.trim()]) el.textContent = L_AR[el.textContent.trim()]; });
   }
   if (offered.length > 1) {
     const b = document.createElement('button');
@@ -60,13 +62,18 @@ async function slideshow(online, local) {
     slides[cur].classList.add('on');
     slides[1 - cur].classList.remove('on');
     dots.querySelectorAll('button').forEach((d, i) => d.classList.toggle('on', i === n));
+    fillCards();
   };
   const tick = () => { clearInterval(timer); if (list.length > 1) timer = setInterval(() => show((shown + 1) % list.length), 6500); };
+  // The polaroid cards show the photos after the one in the background.
+  const cards = document.querySelectorAll('.pc .ph');
+  const fillCards = () => cards.forEach((c, i) => { const src = list[(Math.max(shown, 0) + 1 + i) % list.length]; if (src && list.length > 1) c.style.backgroundImage = `url("${src.replace(/"/g, '%22')}")`; });
   const add = (src) => {
     list.push(src);
     dots.innerHTML = list.length > 1 ? list.map((_, i) => `<button type="button" aria-label="Photo ${i + 1}" class="${i === shown ? 'on' : ''}"></button>`).join('') : '';
     dots.querySelectorAll('button').forEach((d, i) => (d.onclick = () => { show(i); tick(); }));
     if (list.length === 1) show(0);
+    fillCards();
     tick();
   };
   // Show the first photo that loads straight away, then add the rest as they arrive.

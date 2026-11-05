@@ -1,0 +1,7 @@
+[
+ { "file": "photos/photo-volunteer-boxes.jpg", "tags": ["food", "community", "emergency"], "alt": "A volunteer carrying a food parcel", "altAr": "متطوع يحمل طرداً غذائياً", "width": 1800, "height": 1201, "photo": true },
+ { "file": "photos/photo-delivery-door.jpg", "tags": ["food", "health", "emergency", "community"], "alt": "Supplies delivered to a family’s door", "altAr": "إيصال المساعدات إلى باب الأسرة", "width": 1800, "height": 1018, "photo": true },
+ { "file": "photos/photo-delivery-care.jpg", "tags": ["health", "food", "women", "community"], "alt": "Health workers unpacking a care package", "altAr": "عاملون صحيون يفرغون طرداً للرعاية", "width": 1800, "height": 1018, "photo": true },
+ { "file": "photos/photo-serving-meals.jpg", "tags": ["food", "community"], "alt": "Volunteers serving a warm meal", "altAr": "متطوعون يقدّمون وجبة ساخنة", "width": 1800, "height": 1200, "photo": true },
+ { "file": "photos/photo-meal-handover.jpg", "tags": ["food", "community"], "alt": "A hot meal handed over with care", "altAr": "وجبة ساخنة تُقدَّم بعناية", "width": 1800, "height": 1200, "photo": true }
+]

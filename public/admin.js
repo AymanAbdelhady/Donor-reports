@@ -428,7 +428,7 @@ async function branding(el) {
       <div class="actions" style="justify-content:flex-start"><label class="btn primary">Add photos<input type="file" accept="image/*" multiple hidden id="libUp"></label></div></div>
     <div class="card"><h2>Sign-in page <small>photos that fade behind the sign-in box</small></h2>
       <label class="f full">Headline<input id="siHead" value="${esc(draft.signin.headline)}" maxlength="120" placeholder="Every donor deserves a beautiful thank-you"></label>
-      <label class="f full" style="margin-top:12px">Photo links <small>one https link per line (up to 8). If none can load, your photo library or illustrations are shown instead.</small><textarea id="siImgs" rows="5" spellcheck="false">${esc(draft.signin.images.join('\n'))}</textarea></label>
+      <label class="f full" style="margin-top:12px">Photo links <small>one per line (up to 8): https links, or brand/… paths for the bundled sample photos. If none can load, your photo library is shown instead.</small><textarea id="siImgs" rows="5" spellcheck="false">${esc(draft.signin.images.join('\n'))}</textarea></label>
       <div class="si-thumbs">${draft.signin.images.map((u) => `<img src="${esc(u)}" alt="" loading="lazy" onerror="this.classList.add('bad');this.title='This link could not be loaded'">`).join('')}</div></div>
     <div class="savebar"><button class="btn primary" id="saveB">Save branding</button></div>`;
   $('#siHead').oninput = (e) => (draft.signin.headline = e.target.value);
